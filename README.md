@@ -1,20 +1,21 @@
 ## Hi there 👋
+我是 **Lml2006**，一名大二人工智能专业学生 🧑‍💻，正在系统学习深度学习与 Python 编程。
+这里记录了我的《动手学深度学习》学习笔记与代码实现，欢迎交流～
 
-<!--
-**Lml2006/Lml2006** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+### 📂 仓库结构
+- 📚 `d2l/`：《动手学深度学习》代码实现
+  - 🧮 `d2l/chapter03/`：第3章 线性神经网络
 
-Here are some ideas to get you started:
+### 🚀 学习进度
+- ✅ 第3章 线性神经网络
+  - 3.3.1 生成数据集
+- 📝 待学习：3.3.2 读取数据集
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
-## 📂 仓库结构
-- `d2l/`: 《动手学深度学习》代码实现
-  - `d2l/chapter03/`: 第3章 线性神经网络
-- `python_basics/`: Python 基础练习代码
+### 🛠️ 技术栈
+- 语言：Python
+- 框架：PyTorch
+- 工具：Jupyter Notebook, Git, GitHub
+
+### 📬 找我
+- GitHub: [@Lml2006](https://github.com/Lml2006)
+- （邮箱：2098255774@qq.com）
