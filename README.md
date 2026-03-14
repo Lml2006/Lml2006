@@ -14,3 +14,7 @@ Here are some ideas to get you started:
 - 😄 Pronouns: ...
 - ⚡ Fun fact: ...
 -->
+## 📂 仓库结构
+- `d2l/`: 《动手学深度学习》代码实现
+  - `d2l/chapter03/`: 第3章 线性神经网络
+- `python_basics/`: Python 基础练习代码
