@@ -1,29 +1,37 @@
-def load_array(data_arrays, batch_size, is_train=True):  #@save     
+def load_array(data_arrays, batch_size, is_train=True):  #定义函数，接收数据数组、批次大小和是否训练模式
   """构造一个PyTorch数据迭代器"""     
-  dataset = data.TensorDataset(*data_arrays)     
-  return data.DataLoader(dataset, batch_size, shuffle=is_train)
+  dataset = data.TensorDataset(*data_arrays)     #将输入的多个数据数组（如特征、标签）打包成数据集， *  是解包操作
+  return data.DataLoader(dataset, batch_size, shuffle=is_train) #返回数据加载器， shuffle=is_train  表示训练时会打乱数据顺序，测试时则不打乱
   
-  batch_size = 10 
-  data_iter = load_array((features, labels), batch_size)
+  batch_size = 10 #设置每个批次包含10个样本
+  data_iter = load_array((features, labels), batch_size) #调用函数创建数据迭代器，传入特征、标签和批次大小
   
-  next(iter(data_iter))
+  next(iter(data_iter)) 
+#(iter(data_iter) 
+#含义：将  data_iter  转换为迭代器（Iterator）。
+#背景： data_iter  是之前通过  DataLoader  创建的数据加载对象，它是一个可迭代对象（支持  for  循环），但不能直接通过索引取值。
+#作用：调用  iter()  是为了获取它的迭代器，从而调用  next()  方法取出第一个批次的数据。
+#next(...) 
+#含义：从迭代器中读取下一个元素（此处即读取迭代器的第一个元素）。
+#作用：这是调试代码的常用手段——不通过循环，直接查看数据加载器的第一批数据长什么样，验证数据读取、批次划分是否符合预期。
+  
   [tensor([[ 0.1554, -0.2034],
          [-0.2140,  1.0352],
          [-0.4209,  0.0428],
-         [ 0.1887,  0.6141],
-         [ 0.4987, -0.2314],
+         [ 0.1887,  0.6141],     # 类型： torch.Tensor （PyTorch核心数据类型，可理解为多维数组）
+         [ 0.4987, -0.2314],     # 形状： [10, 2] ，表示共 10个样本，每个样本有 2个特征（比如身高、体重这类输入数据）。
          [ 0.0653,  1.6406],
          [-1.1881,  0.2900],
          [-0.2824,  0.5910],
          [ 0.9963, -0.1816],
-         [-1.6830, -1.3963]]),
+         [-1.6830, -1.3963]]),  
  tensor([[ 5.2116],
-         [ 0.2479],
-         [ 3.2188],
+         [ 0.2479],   # 类型： torch.Tensor  10个真实标签。
+         [ 3.2188],   # 形状： [10, 1] ，表示对应这10个样本的（比如房价、疾病预测结果这类目标值）。
          [ 2.4845],
          [ 5.9884],
          [-1.2453],
          [ 0.8441],
          [ 1.6217],
          [ 6.8072],
-         [ 5.5692]])]
+         [ 5.5692]])]  #遍历数据迭代器，查看每个批次的数据
