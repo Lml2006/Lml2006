@@ -1,2 +1,6 @@
-net[0].weight.data.normal_(0, 0.01) 
+net[0].weight.data.normal_(0, 0.01)
+# 对神经网络第0层（第一层）的权重（weight）进行初始化
+# normal_(0, 0.01)：正态分布初始化，均值为0，标准差为0.01
 net[0].bias.data.fill_(0)
+# 对神经网络第0层（第一层）的偏置（bias）进行初始化
+# fill_(0)：将所有偏置参数的值全部填充为0
