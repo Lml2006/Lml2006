@@ -1,1 +1,1 @@
-loss = nn.MSELoss()
+loss = nn.MSELoss() #创建一个均方误差损失函数，用来计算模型预测值和真实值之间的差距
