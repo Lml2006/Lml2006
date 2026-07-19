@@ -1,10 +1,8 @@
 import tensorflow as tf
-
 net = tf.keras.models.Sequential([
     tf.keras.layers.Dense(256, activation=tf.nn.relu),
     tf.keras.layers.Dense(10),
 ])
-
 X = tf.random.uniform((2, 20))
 net(X)
 class MLP(tf.keras.Model):
@@ -16,7 +14,6 @@ class MLP(tf.keras.Model):
         # Hiddenlayer
         self.hidden = tf.keras.layers.Dense(units=256, activation=tf.nn.relu)
         self.out = tf.keras.layers.Dense(units=10)  # Outputlayer
-
     # 定义模型的前向传播，即如何根据输入X返回所需的模型输出
     def call(self, X):
         return self.out(self.hidden((X)))
@@ -29,7 +26,6 @@ class MySequential(tf.keras.Model):
         for block in args:
             # 这里，block是tf.keras.layers.Layer子类的一个实例
             self.modules.append(block)
-
     def call(self, X):
         for module in self.modules:
             X = module(X)
@@ -45,7 +41,6 @@ class FixedHiddenMLP(tf.keras.Model):
         # 使用tf.constant函数创建的随机权重参数在训练期间不会更新（即为常量参数）
         self.rand_weight = tf.constant(tf.random.uniform((20, 20)))
         self.dense = tf.keras.layers.Dense(20, activation=tf.nn.relu)
-
     def call(self, inputs):
         X = self.flatten(inputs)
         # 使用创建的常量参数以及relu和matmul函数
@@ -65,10 +60,8 @@ class NestMLP(tf.keras.Model):
         self.net.add(tf.keras.layers.Dense(64, activation=tf.nn.relu))
         self.net.add(tf.keras.layers.Dense(32, activation=tf.nn.relu))
         self.dense = tf.keras.layers.Dense(16, activation=tf.nn.relu)
-
     def call(self, inputs):
         return self.dense(self.net(inputs))
-
 chimera = tf.keras.Sequential()
 chimera.add(NestMLP())
 chimera.add(tf.keras.layers.Dense(20))
@@ -78,7 +71,6 @@ chimera(X)
 
 # 导入TensorFlow深度学习框架，约定别名为tf
 import tensorflow as tf
-
 # ===================== 方式1：使用内置Sequential序贯容器构建模型 =====================
 # Sequential 是Keras提供的线性堆叠模型容器，数据会按顺序依次流经每一层
 net = tf.keras.models.Sequential([
@@ -87,14 +79,11 @@ net = tf.keras.models.Sequential([
     # 全连接层：输出层，输出维度10（对应10分类任务的输出），默认无激活函数
     tf.keras.layers.Dense(10),
 ])
-
 # 构造测试输入：形状为(2, 20)的均匀随机张量
 # 2代表batch_size（批次样本数），20代表每个样本的特征维度
 X = tf.random.uniform((2, 20))
 # 调用模型执行前向传播，传入输入X，得到模型输出
 net(X)
-
-
 # ===================== 方式2：继承Model基类自定义MLP模型 =====================
 # 自定义多层感知机类，继承 tf.keras.Model 是Keras自定义模型的标准方式
 # 相比Sequential，自定义类可以实现更灵活的前向逻辑、控制流、参数复用
@@ -108,18 +97,14 @@ class MLP(tf.keras.Model):
         self.hidden = tf.keras.layers.Dense(units=256, activation=tf.nn.relu)
         # 定义输出层：全连接层，输出单元数10
         self.out = tf.keras.layers.Dense(units=10)  
-
     # 定义前向传播逻辑：模型被调用时自动执行此方法
     # 输入X先经过隐藏层计算，再传入输出层，最终返回输出结果
     def call(self, X):
         return self.out(self.hidden((X)))
-
 # 实例化自定义MLP模型
 net = MLP()
 # 执行前向传播，验证模型输出
 net(X)
-
-
 # ===================== 方式3：自定义MySequential，模拟官方Sequential功能 =====================
 # 手动实现一个序列容器，理解Sequential的底层原理：按顺序依次调用各层
 class MySequential(tf.keras.Model):
@@ -132,21 +117,17 @@ class MySequential(tf.keras.Model):
         for block in args:
             # block 是 tf.keras.layers.Layer 或 Model 的子类实例
             self.modules.append(block)
-
     # 前向传播：按列表顺序依次调用每个模块，数据逐层向后传递
     def call(self, X):
         for module in self.modules:
             X = module(X)
         return X
-
 # 使用自定义序列容器构建模型，传入两个全连接层
 net = MySequential(
     tf.keras.layers.Dense(units=256, activation=tf.nn.relu),
     tf.keras.layers.Dense(10))
 # 执行前向传播验证
 net(X)
-
-
 # ===================== 方式4：带固定权重、参数复用与控制流的特殊模型 =====================
 # 演示自定义模型的灵活能力：常量权重、层复用、循环控制流
 # 这些复杂逻辑无法通过Sequential直接实现
@@ -160,7 +141,6 @@ class FixedHiddenMLP(tf.keras.Model):
         self.rand_weight = tf.constant(tf.random.uniform((20, 20)))
         # 定义一个可训练的全连接层，输出维度20，ReLU激活
         self.dense = tf.keras.layers.Dense(20, activation=tf.nn.relu)
-
     def call(self, inputs):
         # 第一步：将输入展平为二维张量
         X = self.flatten(inputs)
@@ -176,12 +156,9 @@ class FixedHiddenMLP(tf.keras.Model):
             X /= 2
         # 返回X所有元素的和（最终输出为标量）
         return tf.reduce_sum(X)
-
 # 实例化并验证前向传播
 net = FixedHiddenMLP()
 net(X)
-
-
 # ===================== 方式5：模型嵌套与混合组合 =====================
 # 自定义嵌套模型：内部包含一个Sequential子网络，再外接一个全连接层
 class NestMLP(tf.keras.Model):
@@ -195,11 +172,9 @@ class NestMLP(tf.keras.Model):
         self.net.add(tf.keras.layers.Dense(32, activation=tf.nn.relu))
         # 定义外部全连接层，输出16维，ReLU激活
         self.dense = tf.keras.layers.Dense(16, activation=tf.nn.relu)
-
     # 前向传播：输入先经过子网络，再经过外部全连接层
     def call(self, inputs):
         return self.dense(self.net(inputs))
-
 # 构建混合组合模型：将自定义模型、普通层、特殊模型堆叠到一个Sequential中
 chimera = tf.keras.Sequential()
 # 第一层：加入自定义嵌套模型NestMLP
