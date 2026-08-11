@@ -1,7 +1,5 @@
 import tensorflow as tf
 from d2l import tensorflow as d2l
-
-
 def batch_norm(X, gamma, beta, moving_mean, moving_var, eps):
     # 计算移动方差元平方根的倒数
     inv = tf.cast(tf.math.rsqrt(moving_var + eps), X.dtype)
@@ -12,7 +10,6 @@ def batch_norm(X, gamma, beta, moving_mean, moving_var, eps):
 class BatchNorm(tf.keras.layers.Layer):
     def __init__(self, **kwargs):
         super(BatchNorm, self).__init__(**kwargs)
-
     def build(self, input_shape):
         weight_shape = [input_shape[-1], ]
         # 参与求梯度和迭代的拉伸和偏移参数，分别初始化成1和0
@@ -28,12 +25,10 @@ class BatchNorm(tf.keras.layers.Layer):
             shape=weight_shape, initializer=tf.initializers.ones,
             trainable=False)
         super(BatchNorm, self).build(input_shape)
-
     def assign_moving_average(self, variable, value):
         momentum = 0.9
         delta = variable * momentum + value * (1 - momentum)
         return variable.assign(delta)
-
     @tf.function
     def call(self, inputs, training):
         if training:
