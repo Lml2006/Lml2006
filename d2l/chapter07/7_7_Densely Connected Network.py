@@ -1,8 +1,6 @@
 import torch
 from torch import nn
 from d2l import torch as d2l
-
-
 def conv_block(input_channels, num_channels):
     return nn.Sequential(
         nn.BatchNorm2d(input_channels), nn.ReLU(),
@@ -15,7 +13,6 @@ class DenseBlock(nn.Module):
             layer.append(conv_block(
                 num_channels * i + input_channels, num_channels))
         self.net = nn.Sequential(*layer)
-
     def forward(self, X):
         for blk in self.net:
             Y = blk(X)
