@@ -70,7 +70,6 @@ for X, Y in seq_data_iter_sequential(my_seq, batch_size=2, num_steps=5):
             self.data_iter_fn = d2l.seq_data_iter_sequential
         self.corpus, self.vocab = d2l.load_corpus_time_machine(max_tokens)
         self.batch_size, self.num_steps = batch_size, num_steps
-
     def __iter__(self):
         return self.data_iter_fn(self.corpus, self.batch_size, self.num_steps)
   def load_data_time_machine(batch_size, num_steps,  #@save
