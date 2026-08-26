@@ -11,10 +11,8 @@ X = torch.arange(10).reshape((2, 5))
 F.one_hot(X.T, 28).shape
 def get_params(vocab_size, num_hiddens, device):
     num_inputs = num_outputs = vocab_size
-
     def normal(shape):
         return torch.randn(size=shape, device=device) * 0.01
-
     # 隐藏层参数
     W_xh = normal((num_inputs, num_hiddens))
     W_hh = normal((num_hiddens, num_hiddens))
@@ -47,11 +45,9 @@ class RNNModelScratch: #@save
         self.vocab_size, self.num_hiddens = vocab_size, num_hiddens
         self.params = get_params(vocab_size, num_hiddens, device)
         self.init_state, self.forward_fn = init_state, forward_fn
-
     def __call__(self, X, state):
         X = F.one_hot(X.T, self.vocab_size).type(torch.float32)
         return self.forward_fn(X, state, self.params)
-
     def begin_state(self, batch_size, device):
         return self.init_state(batch_size, self.num_hiddens, device)
 num_hiddens = 512
