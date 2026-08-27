@@ -2,7 +2,6 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 from d2l import torch as d2l
-
 batch_size, num_steps = 32, 35
 train_iter, vocab = d2l.load_data_time_machine(batch_size, num_steps)
 num_hiddens = 256
@@ -27,7 +26,6 @@ class RNNModel(nn.Module):
         else:
             self.num_directions = 2
             self.linear = nn.Linear(self.num_hiddens * 2, self.vocab_size)
-
     def forward(self, inputs, state):
         X = F.one_hot(inputs.T.long(), self.vocab_size)
         X = X.to(torch.float32)
@@ -36,7 +34,6 @@ class RNNModel(nn.Module):
         # 它的输出形状是(时间步数*批量大小,词表大小)。
         output = self.linear(Y.reshape((-1, Y.shape[-1])))
         return output, state
-
     def begin_state(self, device, batch_size=1):
         if not isinstance(self.rnn, nn.LSTM):
             # nn.GRU以张量作为隐状态
