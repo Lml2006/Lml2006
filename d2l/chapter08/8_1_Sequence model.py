@@ -19,7 +19,6 @@ train_iter = d2l.load_array((features[:n_train], labels[:n_train]),
 def init_weights(m):
     if type(m) == nn.Linear:
         nn.init.xavier_uniform_(m.weight)
-
 # 一个简单的多层感知机
 def get_net():
     net = nn.Sequential(nn.Linear(4, 10),
@@ -27,7 +26,6 @@ def get_net():
                         nn.Linear(10, 1))
     net.apply(init_weights)
     return net
-
 # 平方损失。注意：MSELoss计算平方误差时不带系数1/2
 loss = nn.MSELoss(reduction='none')
 def train(net, train_iter, loss, epochs, lr):
@@ -40,7 +38,6 @@ def train(net, train_iter, loss, epochs, lr):
             trainer.step()
         print(f'epoch {epoch + 1}, '
               f'loss: {d2l.evaluate_loss(net, train_iter, loss):f}')
-
 net = get_net()
 train(net, train_iter, loss, 5, 0.01)
 onestep_preds = net(features)
@@ -63,7 +60,6 @@ features = torch.zeros((T - tau - max_steps + 1, tau + max_steps))
 # 列i（i<tau）是来自x的观测，其时间步从（i）到（i+T-tau-max_steps+1）
 for i in range(tau):
     features[:, i] = x[i: i + T - tau - max_steps + 1]
-
 # 列i（i>=tau）是来自（i-tau+1）步的预测，其时间步从（i）到（i+T-tau-max_steps+1）
 for i in range(tau, tau + max_steps):
     features[:, i] = net(features[:, i - tau:i]).reshape(-1)
