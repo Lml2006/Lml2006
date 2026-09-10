@@ -1,7 +1,6 @@
 import torch
 from torch import nn
 from d2l import torch as d2l
-
 # 加载数据
 batch_size, num_steps, device = 32, 35, d2l.try_gpu()
 train_iter, vocab = d2l.load_data_time_machine(batch_size, num_steps)
