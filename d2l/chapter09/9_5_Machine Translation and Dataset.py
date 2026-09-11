@@ -4,7 +4,6 @@ from d2l import torch as d2l
 #@save
 d2l.DATA_HUB['fra-eng'] = (d2l.DATA_URL + 'fra-eng.zip',
                            '94646ad1522d915e7b0f9296181140edcf86a4f5')
-
 #@save
 def read_data_nmt():
     """载入“英语－法语”数据集"""
