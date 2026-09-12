@@ -11,7 +11,6 @@ def read_data_nmt():
     with open(os.path.join(data_dir, 'fra.txt'), 'r',
              encoding='utf-8') as f:
         return f.read()
-
 raw_text = read_data_nmt()
 print(raw_text[:75])
 #@save
