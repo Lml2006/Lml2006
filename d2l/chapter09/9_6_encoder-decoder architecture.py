@@ -1,6 +1,4 @@
 from torch import nn
-
-
 #@save
 class Encoder(nn.Module):
     """编码器-解码器架构的基本编码器接口"""
