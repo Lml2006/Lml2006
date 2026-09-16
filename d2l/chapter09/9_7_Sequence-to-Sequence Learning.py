@@ -13,7 +13,6 @@ class Seq2SeqEncoder(d2l.Encoder):
         self.embedding = nn.Embedding(vocab_size, embed_size)
         self.rnn = nn.GRU(embed_size, num_hiddens, num_layers,
                           dropout=dropout)
-
     def forward(self, X, *args):
         # 输出'X'的形状：(batch_size,num_steps,embed_size)
         X = self.embedding(X)
