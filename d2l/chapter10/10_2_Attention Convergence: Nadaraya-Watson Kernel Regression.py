@@ -58,7 +58,6 @@ net = NWKernelRegression()
 loss = nn.MSELoss(reduction='none')
 trainer = torch.optim.SGD(net.parameters(), lr=0.5)
 animator = d2l.Animator(xlabel='epoch', ylabel='loss', xlim=[1, 5])
-
 for epoch in range(5):
     trainer.zero_grad()
     l = loss(net(x_train, keys, values), y_train)
