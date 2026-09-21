@@ -29,7 +29,6 @@ class AdditiveAttention(nn.Module):
         self.W_q = nn.Linear(query_size, num_hiddens, bias=False)
         self.w_v = nn.Linear(num_hiddens, 1, bias=False)
         self.dropout = nn.Dropout(dropout)
-
     def forward(self, queries, keys, values, valid_lens):
         queries, keys = self.W_q(queries), self.W_k(keys)
         # 在维度扩展后，
@@ -61,7 +60,6 @@ class DotProductAttention(nn.Module):
     def __init__(self, dropout, **kwargs):
         super(DotProductAttention, self).__init__(**kwargs)
         self.dropout = nn.Dropout(dropout)
-
     # queries的形状：(batch_size，查询的个数，d)
     # keys的形状：(batch_size，“键－值”对的个数，d)
     # values的形状：(batch_size，“键－值”对的个数，值的维度)
