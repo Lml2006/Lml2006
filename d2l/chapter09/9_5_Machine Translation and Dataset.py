@@ -18,7 +18,6 @@ def preprocess_nmt(text):
     """预处理“英语－法语”数据集"""
     def no_space(char, prev_char):
         return char in set(',.!?') and prev_char != ' '
-
     # 使用空格替换不间断空格
     # 使用小写字母替换大写字母
     text = text.replace('\u202f', ' ').replace('\xa0', ' ').lower()
@@ -26,7 +25,6 @@ def preprocess_nmt(text):
     out = [' ' + char if i > 0 and no_space(char, text[i - 1]) else char
            for i, char in enumerate(text)]
     return ''.join(out)
-
 text = preprocess_nmt(raw_text)
 print(text[:80])
 #@save
@@ -41,7 +39,6 @@ def tokenize_nmt(text, num_examples=None):
             source.append(parts[0].split(' '))
             target.append(parts[1].split(' '))
     return source, target
-
 source, target = tokenize_nmt(text)
 source[:6], target[:6]
 #@save
@@ -55,7 +52,6 @@ def show_list_len_pair_hist(legend, xlabel, ylabel, xlist, ylist):
     for patch in patches[1].patches:
         patch.set_hatch('/')
     d2l.plt.legend(legend)
-
 show_list_len_pair_hist(['source', 'target'], '# tokens per sequence',
                         'count', source, target);
 src_vocab = d2l.Vocab(source, min_freq=2,
@@ -67,7 +63,6 @@ def truncate_pad(line, num_steps, padding_token):
     if len(line) > num_steps:
         return line[:num_steps]  # 截断
     return line + [padding_token] * (num_steps - len(line))  # 填充
-
 truncate_pad(src_vocab[source[0]], 10, src_vocab['<pad>'])
 #@save
 def build_array_nmt(lines, vocab, num_steps):
