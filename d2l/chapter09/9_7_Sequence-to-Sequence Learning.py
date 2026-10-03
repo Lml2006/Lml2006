@@ -39,10 +39,8 @@ class Seq2SeqDecoder(d2l.Decoder):
         self.rnn = nn.GRU(embed_size + num_hiddens, num_hiddens, num_layers,
                           dropout=dropout)
         self.dense = nn.Linear(num_hiddens, vocab_size)
-
     def init_state(self, enc_outputs, *args):
         return enc_outputs[1]
-
     def forward(self, X, state):
         # 输出'X'的形状：(batch_size,num_steps,embed_size)
         X = self.embedding(X).permute(1, 0, 2)
@@ -68,7 +66,6 @@ def sequence_mask(X, valid_len, value=0):
                         device=X.device)[None, :] < valid_len[:, None]
     X[~mask] = value
     return X
-
 X = torch.tensor([[1, 2, 3], [4, 5, 6]])
 sequence_mask(X, torch.tensor([1, 2]))
 X = torch.ones(2, 3, 4)
@@ -100,7 +97,6 @@ def train_seq2seq(net, data_iter, lr, num_epochs, tgt_vocab, device):
             for param in m._flat_weights_names:
                 if "weight" in param:
                     nn.init.xavier_uniform_(m._parameters[param])
-
     net.apply(xavier_init_weights)
     net.to(device)
     optimizer = torch.optim.Adam(net.parameters(), lr=lr)
@@ -132,7 +128,6 @@ def train_seq2seq(net, data_iter, lr, num_epochs, tgt_vocab, device):
 embed_size, num_hiddens, num_layers, dropout = 32, 32, 2, 0.1
 batch_size, num_steps = 64, 10
 lr, num_epochs, device = 0.005, 300, d2l.try_gpu()
-
 train_iter, src_vocab, tgt_vocab = d2l.load_data_nmt(batch_size, num_steps)
 encoder = Seq2SeqEncoder(len(src_vocab), embed_size, num_hiddens, num_layers,
                         dropout)
