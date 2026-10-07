@@ -22,7 +22,6 @@ class PositionalEncoding(nn.Module):
             0, num_hiddens, 2, dtype=torch.float32) / num_hiddens)
         self.P[:, :, 0::2] = torch.sin(X)
         self.P[:, :, 1::2] = torch.cos(X)
-
     def forward(self, X):
         X = X + self.P[:, :X.shape[1], :].to(X.device)
         return self.dropout(X)
