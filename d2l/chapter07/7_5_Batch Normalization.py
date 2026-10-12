@@ -97,13 +97,10 @@ def net():
         tf.keras.layers.Dense(10),
     ])
 d2l.train_ch6(net, train_iter, test_iter, num_epochs, lr, d2l.try_gpu())
-
-
 # 导入TensorFlow框架
 import tensorflow as tf
 # 导入d2l工具库（动手学深度学习配套工具，封装数据加载、训练绘图等）
 from d2l import tensorflow as d2l
-
 def batch_norm(X, gamma, beta, moving_mean, moving_var, eps):
     """
     批量归一化前向计算函数（推理阶段使用）
@@ -122,14 +119,11 @@ def batch_norm(X, gamma, beta, moving_mean, moving_var, eps):
     # 完整BN公式：Y = gamma * (X - mean)/sqrt(var+eps) + beta
     Y = X * inv + (beta - moving_mean * inv)
     return Y
-
-
 class BatchNorm(tf.keras.layers.Layer):
     """自定义批量归一化层，继承Keras基础层"""
     def __init__(self, **kwargs):
         # 调用父类Layer的构造函数
         super(BatchNorm, self).__init__(**kwargs)
-
     def build(self, input_shape):
         """build：在第一次拿到输入形状后创建权重，仅执行一次"""
         # 参数形状：通道维度，BN对每个通道单独一组gamma/beta
@@ -150,7 +144,6 @@ class BatchNorm(tf.keras.layers.Layer):
             trainable=False)
         # 调用父类build方法，标记层构建完成
         super(BatchNorm, self).build(input_shape)
-
     def assign_moving_average(self, variable, value):
         """滑动平均更新：momentum动量更新全局均值/方差"""
         momentum = 0.9  # 动量系数，一般取0.9/0.99
@@ -158,7 +151,6 @@ class BatchNorm(tf.keras.layers.Layer):
         delta = variable * momentum + value * (1 - momentum)
         # 将计算结果赋值给variable，返回更新操作
         return variable.assign(delta)
-
     @tf.function  # 编译为计算图，加速执行
     def call(self, inputs, training):
         """前向传播核心逻辑，training标记训练/推理模式"""
@@ -191,8 +183,6 @@ class BatchNorm(tf.keras.layers.Layer):
         output = batch_norm(inputs, moving_mean=mean, moving_var=variance,
             beta=self.beta, gamma=self.gamma, eps=1e-5)
         return output
-
-
 # 构建LeNet网络，使用上面【自定义BatchNorm层】
 def net():
     return tf.keras.models.Sequential([
@@ -215,7 +205,6 @@ def net():
         tf.keras.layers.Activation('sigmoid'),
         tf.keras.layers.Dense(10)]    # 输出层，10分类（FashionMNIST）
     )
-
 # 超参数设置：学习率、训练轮数、批次大小
 lr, num_epochs, batch_size = 1.0, 10, 256
 # 加载Fashion-MNIST数据集，生成训练集、测试集迭代器
@@ -224,8 +213,6 @@ train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size)
 net = d2l.train_ch6(net, train_iter, test_iter, num_epochs, lr, d2l.try_gpu())
 # 取出第一个BN层的gamma和beta参数，reshape方便查看
 tf.reshape(net.layers[1].gamma, (-1,)), tf.reshape(net.layers[1].beta, (-1,))
-
-
 # 重新定义net，使用TensorFlow【内置BatchNormalization层】做对比实验
 def net():
     return tf.keras.models.Sequential([
