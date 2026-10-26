@@ -1,5 +1,5 @@
 import collections
-import re
+import re 
 from d2l import torch as d2l
 #@save
 d2l.DATA_HUB['time_machine'] = (d2l.DATA_URL + 'timemachine.txt',
