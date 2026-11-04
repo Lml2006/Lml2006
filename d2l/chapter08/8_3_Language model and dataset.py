@@ -76,3 +76,4 @@ for X, Y in seq_data_iter_sequential(my_seq, batch_size=2, num_steps=5):
     data_iter = SeqDataLoader(
         batch_size, num_steps, use_random_iter, max_tokens)
     return data_iter, data_iter.vocab
+
