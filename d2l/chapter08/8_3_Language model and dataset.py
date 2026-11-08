@@ -1,4 +1,4 @@
-import random
+import random  
 import torch
 from d2l import torch as d2l
 tokens = d2l.tokenize(d2l.read_time_machine())
