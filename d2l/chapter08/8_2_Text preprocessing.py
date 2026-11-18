@@ -250,3 +250,4 @@ def load_corpus_time_machine(max_tokens=-1):  #@save
 # ---- 演示：加载完整的时光机器语料 ----
 corpus, vocab = load_corpus_time_machine()
 len(corpus), len(vocab)  # 输出语料中的词元总数 与 词表大小
+
